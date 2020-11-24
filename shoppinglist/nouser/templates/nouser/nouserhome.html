@@ -1,0 +1,25 @@
+{% extends "nouser/basenouser.html" %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col align-self-center">
+        <p>Don't go out without your 
+            <br>
+            <h2>Shopping List</h2>
+            <br>
+            Create one here or
+            <button type="submit", name="save" class="btn btn-info">Register</button>
+        </p>
+
+    </div>
+    <div class="col">
+        <img src="{% static 'images/grocery.jpg' %}"/>
+    </div>
+
+</div>
+
+{% endblock %}

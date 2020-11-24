@@ -1,0 +1,28 @@
+{% extends 'main/base.html' %}
+
+{% block title %} {{sl}} sorted by type {% endblock %}
+
+<h3>{{item_type_list}}</h3>
+
+{% block content %}
+
+    {% for section in items_data.items %}
+        <h3>{{section.0}}</h3>
+        {% for item in section.1 %}
+            <!-- <h4>{{item}}</h4> -->
+            <ul class="list-group list-group-horizontal-sm">
+                <li class="list-group-item">{{item.name}}</li>
+                <li class="list-group-item">{{item.quantity}}</li>
+                <li class="list-group-item">{{item.price}} €</li>
+              </ul>
+        {% endfor %}
+    {% endfor %}
+
+    <div class="form-group">
+        <a class="btn btn-info" href="/{{sl.id}}" role="button">Return</a>
+    </div>
+
+{% endblock %}
+
+
+

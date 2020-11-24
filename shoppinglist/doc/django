@@ -1,0 +1,42 @@
+
+||| DJANGO SETUP |||
+
+STATRTING A PROJECT
+
+New -> Folder -> <folder_name> -->  web_test
+In <web_project> : Open VSC and create env from terminal -> python -m venv .venv
+Activate env:  .venv -> Scripts -> activate.bat 
+pip install django
+Go back to foler web_test --> django-admin startproject <name> --> name:web_project
+cd web_project > python manage.py runserver
+python manage.py startapp <name_app> --> name_app:main
+
+
+MANAGING STATIC FILES
+
+I had a lot of problems with this shit. ca a pris ma tete pendant deux jours. Because it is supponse to be something basic, being able to serve a CSS to give style to my fucking html.
+Lo maluco de esta mierda es que por razones deconocidas a veces funciona en Mozilla, a veces en Chrome, a veces en ninguno de los dos. 
+
+https://docs.djangoproject.com/en/3.1/howto/static-files/
+
+- In settings.py add at the end -> STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+							  -> STATIC_URL = '/static/' 		
+							  
+- in urls.py of the app (my case > urls.py ...\main) ->
+								from django.conf import settings
+								from django.conf.urls.static import static
+
+								urlpatterns = [
+									# ... the rest of your URLconf goes here ...
+								] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+ 
+- in the app (main) make a folder 'static/css/styles.css' --> in this styles.css make the css for the app
+
+- In the template: 
+
+						{% load static %}
+						 <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}"> 
+
+- every time I make a modif to any of the css in the project i have to go to the terminal and type: python manage.py collecstatic
+
+- launch the server.
