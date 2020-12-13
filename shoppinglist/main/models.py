@@ -50,7 +50,7 @@ class SList(models.Model):
 class Item(models.Model):
     slist = models.ForeignKey(SList, on_delete=models.CASCADE)
     name = models.CharField(max_length=300)
-    quantity = models.IntegerField(max_length=100, blank=True)
+    quantity = models.IntegerField(blank=True)
     unity = models.CharField(max_length=100, blank=True)
     item_type = models.CharField(max_length=300, blank=True)
     price = models.DecimalField(max_digits=30, decimal_places=2, blank=True)
