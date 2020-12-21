@@ -14,12 +14,17 @@
           </div>
           <div class="col">
             <select name="item_type" id="input_item_type" class="form-control">
-              <option selected>Type</option>
+              <option selected>Category</option>
               <option>fruit</option>
               <option>vegetable</option>
-              <option>dairy</option>
+              <option>dairy, eggs & cheesse</option>
+              <option>beverages</option>
               <option>meat</option>
-              <option>grain</option>
+              <option>grain, pasta, etc</option>
+              <option>bread & bakery</option>
+              <option>snacks</option>
+              <option>cleaners</option>
+              <option>personal care</option>
               <option>other</option>
             </select>
           </div>
@@ -27,7 +32,20 @@
             <input type="number" name="quantity" class="form-control" placeholder="Quantity">
           </div>
           <div class="col">
-            <input type="number" step="any" name="price" class="form-control" placeholder="Price">
+            <select name="unit" id="input_unit" class="form-control">
+              <option selected>Unit</option>
+              <option>kg</option>
+              <option>lb</option>
+              <option>gr</option>
+              <option>L</option>
+              <option>ml</option>
+              <option>oz</option>
+              <option>unit</option>
+              <option>other</option>
+            </select>
+          </div>
+          <div class="col">
+            <input type="number" step="any" name="price" class="form-control" placeholder="Price/unity">
           </div>
           <div class="col">
             <button type="submit", name="addItem", value="addItem", class="btn btn-primary">Add Item</button>
@@ -47,8 +65,9 @@
             <tr>
               <th scope="col"></th>
               <th scope="col">Name</th>
-              <th scope="col">Type</th>
+              <th scope="col">Category</th>
               <th scope="col">Quantity</th>
+              <th scope="col">Unit</th>
               <th scope="col">Price (€)</th>
             </tr>
           </thead>
@@ -65,15 +84,16 @@
                 <td>{{item.name}}</td>
                 <td>{{item.item_type}}</td>
                 <td>{{item.quantity}}</td>
-                <td>{{item.price}}</td>
+                <td>{{item.unit}}</td>
+                <td>{{item.obtaine_tot_price_per_item}}</td>
               </tr>
             {% endfor %}
           </tbody>
         </table>
 
         <div class="list-group">
-          <label><h4>Total price: </h4>{{total.total_price}} €</label>
-          <label><h4>Total items: </h4>{{total.total_items}}</label>
+          <label><h4>Total price: </h4>{{sl.total_sl_price}} €</label>
+          <label><h4>Total items: </h4>{{sl.total_items_in_list}}</label>
         </div>
 
         <button type="submit", name="sortList", value="sortList", class="btn btn-info">Sort list</button>

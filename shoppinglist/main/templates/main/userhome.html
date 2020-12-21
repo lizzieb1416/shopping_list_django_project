@@ -2,12 +2,12 @@
 
 {% block content %}
 
-<div class="alert alert-info alert-dismissible fade show" role="alert">
+<!-- <div class="alert alert-info alert-dismissible fade show" role="alert">
     Hello {{username}} You succesfully logged in!
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
     </button>
-</div>
+</div> -->
 
 <h3>All your shopping lists:</h3>
 
@@ -28,8 +28,12 @@
             {% endfor %}
 
             <button type="submit", name="delete_sl", value="delete_sl", class="btn btn-secondary">Delete list</button>
-            <button type="submit", name="delete_sl", value="delete_sl", class="btn btn-success">Create list</button>
-
+           
+            <div class="input-group mb-3">
+                <button class="btn btn-success" type="submit" name="create_sl", value="create_sl" id="button-addon1">Create list</button>
+                <input type="text" name="input_sl" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+            </div>
+                
     </form>
 
 {% endblock %}

@@ -35,29 +35,12 @@ def list_renderer(response, id):
         else:
             total = sl.item_set.aggregate(total_price=Sum("price"), total_items=Count('name'))
             print(total)
+            
+            return render(response, "main/list_renderer.html", {"sl":sl})
 
-            return render(response, "main/list_renderer.html", {"sl":sl, "total":total})
-
-                
-
-def createlist(response):
-    if response.method == "POST":
-        form = CreateNewList(response.POST)
-        
-        if form.is_valid():
-            n = form.cleaned_data["name"]
-            s = SList(name=n)
-            s.save()
-            response.user.slist.add(s)
-    
-        return HttpResponseRedirect("/%i" %s.id)
-    
-    else:
-        form = CreateNewList()
-    return render(response, "main/createlist.html", {"form":form})
 
 def userhome(response):
-    username = response.user.get_username()
+    # username = response.user.get_username()
     sl = response.user.slist.all()
     print(sl)
  
@@ -69,27 +52,73 @@ def userhome(response):
                 if response.POST.get("c" + str(s.id)) == "clicked":
                     s.delete()
                     print("{} deleted".format(s))
+               
+        elif response.POST.get("create_sl"):
+            n = response.POST.get("input_sl")
+            s = SList(name=n)
+            s.save()
+            response.user.slist.add(s)
             
+            return HttpResponseRedirect("/%i" %s.id)
+        
+        return HttpResponseRedirect("/userhome")
     
-    return render(response, "main/userhome.html", {"username":username})
-
+    else:           
+        return render(response, "main/userhome.html")
+    
 
 def sort_list(response, id):
     sl = SList.objects.get(id=id)
     item_type_list = list(set([myitem.item_type for myitem in sl.item_set.all()]))
     items_data = {}
-    
-    i = 0
-    while i < len(item_type_list):
-        for item in sl.item_set.all(): 
-
-            if sl.item_set.filter(item_type=item_type_list[i]):
-                print('EUreka')
-                items_data[item_type_list[i]] = sl.item_set.filter(item_type=item_type_list[i])    
         
+    i = 0
+    
+    while i < len(item_type_list):
+        
+        total_price = []
+        for item in sl.item_set.all(): 
+            
+            if sl.item_set.filter(item_type=item_type_list[i]):
+                total_price.append(item.obtaine_tot_price_per_item)
+                items_data[item_type_list[i]] = (sl.item_set.filter(item_type=item_type_list[i]), sum(total_price)) 
+                print("total AFTER: {}".format(total_price))
+                print(items_data)
+            
+            total_price.clear()
+            print("cleared")
         i += 1
         
+
     print(items_data)
         
-    return render(response, "main/sortlist.html", {"sl":sl, "item_type_list":item_type_list, "items_data":items_data})
+    return render(response, "main/sortlist.html", {"sl":sl, 
+                                                   "items_data":items_data,
+                                                   })
     
+
+
+
+
+
+
+
+
+
+
+
+# def createlist(response):
+#     if response.method == "POST":
+#         form = CreateNewList(response.POST)
+        
+#         if form.is_valid():
+#             n = form.cleaned_data["name"]
+#             s = SList(name=n)
+#             s.save()
+#             response.user.slist.add(s)
+    
+#         return HttpResponseRedirect("/%i" %s.id)
+    
+#     else:
+#         form = CreateNewList()
+#     return render(response, "main/createlist.html", {"form":form})

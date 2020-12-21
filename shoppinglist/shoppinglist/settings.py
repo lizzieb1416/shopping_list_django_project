@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'main.apps.MainConfig',
     'nouser.apps.NouserConfig',
     'register.apps.RegisterConfig',
+    'mathfilters',
 ]
 
 MIDDLEWARE = [
