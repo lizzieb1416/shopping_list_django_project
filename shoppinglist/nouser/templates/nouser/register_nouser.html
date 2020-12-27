@@ -4,6 +4,8 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+{{ id }}
+
     <form method="POST" class="form-group">
         {% csrf_token %}
         {{ form|crispy }}

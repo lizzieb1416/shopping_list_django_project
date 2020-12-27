@@ -10,7 +10,6 @@ from django.contrib import messages
 def list_renderer(response, id):
     sl = SList.objects.get(id=id)
     
-    
     if sl in response.user.slist.all():
     
         if response.method == "POST":
@@ -38,11 +37,14 @@ def list_renderer(response, id):
             
             return render(response, "main/list_renderer.html", {"sl":sl})
 
+    else:
+        return HttpResponse("OOPS! YOU DON'T HAVE ACCES TO THIS PAGE")
 
-def userhome(response):
+def userhome(response): 
     # username = response.user.get_username()
     sl = response.user.slist.all()
     print(sl)
+    
  
     if response.method == "POST":
         print(response.POST)
@@ -64,7 +66,7 @@ def userhome(response):
         return HttpResponseRedirect("/userhome")
     
     else:           
-        return render(response, "main/userhome.html")
+        return render(response, "main/userhome.html") 
     
 
 def sort_list(response, id):

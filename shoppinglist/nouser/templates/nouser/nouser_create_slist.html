@@ -1,0 +1,21 @@
+{% extends "nouser/basenouser.html" %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+
+    <form method="POST" action="#">
+
+        {% csrf_token %}
+
+        <div class="input-group mb-3">
+            <button class="btn btn-success" type="submit" name="create_sl", value="create_sl" id="button-addon1">Create list</button>
+            <input type="text" name="input_sl" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+        </div>
+            
+    </form>
+
+
+{% endblock %}

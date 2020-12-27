@@ -1,0 +1,106 @@
+{% extends "nouser/basenouser.html" %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<h1>{{sl.name}}</h1>
+
+    <form method="POST" action="#">
+      {% csrf_token %}
+    
+        <div class="row">
+          <div class="col">
+            <input type="text" name="name" class="form-control" placeholder="Name">
+          </div>
+          <div class="col">
+            <select name="item_type" id="input_item_type" class="form-control">
+              <option selected>Category</option>
+              <option>fruit</option>
+              <option>vegetable</option>
+              <option>dairy, eggs & cheesse</option>
+              <option>beverages</option>
+              <option>meat</option>
+              <option>grain, pasta, etc</option>
+              <option>bread & bakery</option>
+              <option>snacks</option>
+              <option>cleaners</option>
+              <option>personal care</option>
+              <option>other</option>
+            </select>
+          </div>
+          <div class="col">
+            <input type="number" name="quantity" class="form-control" placeholder="Quantity">
+          </div>
+          <div class="col">
+            <select name="unit" id="input_unit" class="form-control">
+              <option selected>Unit</option>
+              <option>kg</option>
+              <option>lb</option>
+              <option>gr</option>
+              <option>L</option>
+              <option>ml</option>
+              <option>oz</option>
+              <option>unit</option>
+              <option>other</option>
+            </select>
+          </div>
+          <div class="col">
+            <input type="number" step="any" name="price" class="form-control" placeholder="Price/unity">
+          </div>
+          <div class="col">
+            <button type="submit", name="addItem", value="addItem", class="btn btn-primary">Add Item</button>
+          </div>
+        </div>
+        
+        {% if messages %}
+        <ul class="messages">
+          {% for message in messages %}
+            <li {% if message.tags %} class="{{message.tags}}" {% endif %}>{{message}}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Name</th>
+              <th scope="col">Category</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Unit</th>
+              <th scope="col">Price (€)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in sl.item_set.all %}
+              <tr>
+                <th scope="row">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <input type="checkbox" value="clicked", name="c{{item.id}}">
+                    </div>
+                  </div>
+                </th>
+                <td>{{item.name}}</td>
+                <td>{{item.item_type}}</td>
+                <td>{{item.quantity}}</td>
+                <td>{{item.unit}}</td>
+                <td>{{item.obtaine_tot_price_per_item}}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        <div class="list-group">
+          <label><h4>Total price: </h4>{{sl.total_sl_price}} €</label>
+          <label><h4>Total items: </h4>{{sl.total_items_in_list}}</label>
+        </div>
+
+        <button type="submit", name="saveList", value="saveList", class="btn btn-info">Save list</button>
+        <button type="submit", name="deleteItem", value="deleteItem", class="btn btn-secondary">Delete Item</button>
+
+    </form>
+
+{% endblock %}

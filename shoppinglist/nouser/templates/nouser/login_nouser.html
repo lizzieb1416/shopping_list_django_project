@@ -1,0 +1,30 @@
+{% extends "nouser/basenouser.html" %}
+
+{% block title %}
+Login here
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <form method="POST" class="form-group">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="username" name="username" class="form-control" aria-describedby="username">
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" name="password" class="form-control">
+          </div>
+          <p>Don't have an account? Create one</p>
+          <button type="submit" name="create_account" value="create_account" class="btn btn-primary">Here</button>
+          <button type="submit" name="submit" value="submit" class="btn btn-primary">Submit</button>
+
+        
+    </form>
+{% endblock %}
+
+
+<!-- <p>Don't have an account? Create one <a href="/register">Here</a></p>
+<button type="submit" class="btn btn-primary">Login</button> -->
