@@ -25,13 +25,13 @@ https://uwsgi-docs.readthedocs.io/en/latest/tutorials/Django_and_nginx.html
 
 https://www.youtube.com/watch?v=YnrgBeIRtvo&t=311s
 
-https://www.youtube.com/watch?v=BBKq6H9Rm5g&t=293s
+https://www.youtube.com/watch?v=BBKq6H9Rm5g&t=293s --> NGINX + Waitress
 
-En este caso la configuracion que se le hace a la aplicacion que vamos a introducir en Nginx (webproject_nginx.conf) sirve como portforwading;aqui decidi que el puerto por el que escucha es el 80, y puedo introducir cuantas app quiera, pero debo asignarle otro puerto. En LAN si otro dispositivo se quiere conectar a mi app tiene que hacerlo en iptablet:80.
+En este caso la configuracion que se le hace a la aplicacion que vamos a introducir en Nginx (webproject_nginx.conf) sirve como portforwading;aqui decidi que el puerto por el que escucha es el 80, y puedo introducir cuantas app quiera, pero asignandoles otro puerto. En LAN si otro dispositivo se quiere conectar a mi app tiene que hacerlo en iptablet:80.
 
-Nginx se comunica con Waitress, y Waitress se comunica con Wsgi.  si yo me quiero conectar en localhost voy a localhost:8080 o iptablet:8080. Que es el puerto que asignamos en Waitress.
+Nginx se comunica con Waitress, y Waitress se comunica con Wsgi.  si yo me quiero conectar en localhost voy a localhost:8080 o iptablet:8080. Que es el puerto que asignamos en Waitress. 
 
-esta configuracion permite hacer un proxy, que comunica el puerto 80 de iptablet con el puerto 8080 de mi app. 
+esta configuracion permite hacer un proxy, que comunica el puerto 80 de iptablet con el puerto 8080 de mi app. Entonces, si quieroservir los static files tengo que conectarme a localhost:80.
 
 << DEPLOY DJANGO WITH NGINX PROXY IN DOCKER CONTAINERS IN UBUNTU >>
 
@@ -39,12 +39,14 @@ https://www.youtube.com/watch?v=nh1ynJGJuT8&t=1094s
 
 1. Make project and all the docker configurations in VSC in WINDOWS.
 2. Download Ubuntu and install it in a VM. Make sure to configurate your VM with bridge adapter and not NAT. 
+ -- use WinSCP to transfer the project to the VM.
 3. Use Putty for easier manipulation.
 4. In Ubuntu (First steps):
  - sudo apt install python3-pip
+ - sudo apt install python3-venv (install envirorment)
  - python3 -m venv .web_project-env (creation of envirorment)
- - cd repertory-env/bin/activate (source-env is a hidden repertory, use     ls-la to see it).
- - source activate (activate envirorment)
+ - cd .web_project-env/bin/activate (source-env is a hidden repertory, use     ls-la to see it).
+ - source .web_project-env/bin/activate (activate envirorment)
  - pip install -r requirements.txt (this can take some time)
  - django-admin --version (to verify if it is installed)
  - In settings.py --> ALLOWED_HOSTS = ['vm_ip'])
@@ -55,6 +57,17 @@ sudo systemctl status docker/sudo docker run hello-world/sudo docker images (to 
 sudo apt install docker-compose
 sudo docker-compose up (deploy project in developpement stage)
 6. Follow the steps in the video to deploy de app in production stage with nginx. The only differente with the tutorial is that in settings.py i have to add the host ip, in my case --> ALLOWED_HOSTS = ['vm_ip'])
+
+
+DETAILS:
+
+**Deploy for developpement by hand (without docker-compose):
+
+- sudo docker build . -t "<image name>"  (to build the image of my SL from the Dockerfile)
+- sudo docker run --name <container name> --rm -it -d -p 8000:8000 <image>  (Create the container from the image)
+- sudo docker exec -it <container name> python manage.py runserver localhost:8080 (replaces docker-compose)
+
+-- Or, omit the two last steps. buil the image and then make sudo docker-compose up. Coz' it is annoying to write all of those command lines. 
 
 
 

@@ -13,6 +13,7 @@ def nouserhome(response):
     
     return render(response, "nouser/nouserhome.html", {})
 
+
 def nouser_create_slist(response):
     
     if response.method == "POST":
@@ -24,6 +25,7 @@ def nouser_create_slist(response):
             return HttpResponseRedirect("/home/%i" %tmp_sl.id)
             
     return render(response, "nouser/nouser_create_slist.html", {})
+
 
 def nouser_new_list(response, id):
     
