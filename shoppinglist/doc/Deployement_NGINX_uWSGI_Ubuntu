@@ -1,0 +1,36 @@
+https://www.youtube.com/watch?v=ZpR1W-NWnp4
+https://tonyteaches.tech/django-nginx-uwsgi-tutorial/
+
+
+ **INITIAL PYTHON-DJANGO CONF**
+
+- python3 --version --> Python 3.8.5
+- sudo apt-get install python3-venv
+- python3 -m venv sl-env
+- source sl-env/bin/activate (activate envirorment)
+- pip install Django (or in my case: pip install -r requirements.txt)
+
+ **INTERFACE GETWAY** 
+
+sudo apt-get install python3.8-dev
+sudo apt-get install gcc
+pip install uwsgi
+
+ **NGINX
+
+- sudo apt-get install nginx
+- nano /etc/nginx/sites-available/sl.conf --> add conf to this doc.
+- sudo ln -s /etc/nginx/sites-available/sl.conf /etc/nginx/sites-enabled/
+
+ ** settings.py CONFIG
+
+ ** MAKE IT WORK ALL TOGETHER
+uwsgi --socket shoppinglist.sock --module shoppinglist.wsgi --chmod-socket=666
+
+ **DEPLOY FOR PROD
+ps aux 
+sudo ln -s /home/liset/sl_app_NGINX_uWSGI/shoppinglist/sl_uwsgi.ini /home/liset/sl_app_NGINX_uWSGI/sl-env/vassals
+
+EMPEROR
+uwsgi --emperor /home/liset/sl_app_NGINX_uWSGI/sl-env/vassals --uid www-data --gid www-data
+

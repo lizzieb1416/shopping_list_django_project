@@ -25,11 +25,11 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'changeme')
 # SECRET_KEY = 'llpt7rsnsz0-v89l4w!-85y+9y#2nh)o5hgibd+!u1c4y5#m-!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(int(os.environ.get('DEBUG', 0)))
-# DEBUG = True
+#DEBUG = bool(int(os.environ.get('DEBUG', 0)))
+DEBUG = True
 
 # ALLOWED_HOSTS = ['ShoppingList-env.eba-ncndieks.eu-west-3.elasticbeanstalk.com']
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.1.8']
 ALLOWED_HOSTS_ENV = os.environ.get('ALLOWED_HOSTS')
 if ALLOWED_HOSTS_ENV:
     ALLOWED_HOSTS.extend(ALLOWED_HOSTS_ENV.split(','))
@@ -128,12 +128,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/static/'
-MEDIA_URL = '/static/media/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+#STATIC_URL = '/static/static/'
+STATIC_URL = '/static/'
+#MEDIA_URL = '/static/media/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
-STATIC_ROOT = '/vol/web/static'
-MEDIA_ROOT = '/vol/web/media'
+#STATIC_ROOT = '/vol/web/static'
+#MEDIA_ROOT = '/vol/web/media'
 
 CRISPY_TEMPLATE_PACK="bootstrap4"
 
