@@ -17,7 +17,7 @@ Offers the advantage of using static files with no problem . It was really annoy
 - Go to the repertory where your nginx files are (In my case C:\nginx-1.19.4), execute nginx.exe (At the end is something like this C:\nginx-1.19.4>nginx.exe) to run the server
 
 
-<< DEPLOY DJANGO PROJECT WITH NGINX AND WSGI IN WINDOWS >> 
+<< DEPLOY DJANGO PROJECT  WITH NGINX AND WSGI IN WINDOWS >> 
 
 Most larger Django sites use a separate Web server – i.e., one that’s not also running Django – for serving static files. This server often runs a different type of web server – faster but less full-featured. (Ex: Nginx, Apache): https://docs.djangoproject.com/en/3.1/howto/static-files/deployment/
 
@@ -33,7 +33,8 @@ Nginx se comunica con Waitress, y Waitress se comunica con Wsgi.  si yo me quier
 
 esta configuracion permite hacer un proxy, que comunica el puerto 80 de iptablet con el puerto 8080 de mi app. Entonces, si quieroservir los static files tengo que conectarme a localhost:80.
 
-<< DEPLOY DJANGO WITH NGINX PROXY IN DOCKER CONTAINERS IN UBUNTU >>
+
+<< DEPLOY DJANGO WITH NGINX PROXY AND uWISGI IN DOCKER CONTAINERS IN UBUNTU >>
 
 https://www.youtube.com/watch?v=nh1ynJGJuT8&t=1094s  
 
@@ -42,7 +43,8 @@ https://www.youtube.com/watch?v=nh1ynJGJuT8&t=1094s
  -- use WinSCP to transfer the project to the VM.
 3. Use Putty for easier manipulation.
 4. In Ubuntu (First steps):
- - sudo apt install python3-pip
+ - sudo apt update
+ - sudo apt install python3-pip (pip3 --version)
  - sudo apt install python3-venv (install envirorment)
  - python3 -m venv .web_project-env (creation of envirorment)
  - cd .web_project-env/bin/activate (source-env is a hidden repertory, use     ls-la to see it).
@@ -56,7 +58,8 @@ sudo apt install docker.io
 sudo systemctl status docker/sudo docker run hello-world/sudo docker images (to see if it works)
 sudo apt install docker-compose
 sudo docker-compose up (deploy project in developpement stage)
-6. Follow the steps in the video to deploy de app in production stage with nginx. The only differente with the tutorial is that in settings.py i have to add the host ip, in my case --> ALLOWED_HOSTS = ['vm_ip'])
+6. Follow the steps in the video to deploy de app in production stage with nginx. The only differente with the tutorial is that in settings.py i have to add the host ip, in my case --> ALLOWED_HOSTS = ['vm_ip']) 
+(docker-compose -f docker-compose-deploy.yml up --build)
 
 
 DETAILS:
