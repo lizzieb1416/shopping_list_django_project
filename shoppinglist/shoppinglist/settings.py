@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'changeme')
 DEBUG = True
 
 # ALLOWED_HOSTS = ['ShoppingList-env.eba-ncndieks.eu-west-3.elasticbeanstalk.com']
-ALLOWED_HOSTS = ['192.168.1.8']
+ALLOWED_HOSTS = ['192.168.1.22', 'smartngo.freeboxos.fr']
 ALLOWED_HOSTS_ENV = os.environ.get('ALLOWED_HOSTS')
 if ALLOWED_HOSTS_ENV:
     ALLOWED_HOSTS.extend(ALLOWED_HOSTS_ENV.split(','))

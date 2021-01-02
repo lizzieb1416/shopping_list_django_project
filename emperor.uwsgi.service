@@ -1,0 +1,9 @@
+[Unit]
+Description=uwsgi emperor for shoppinglist website
+After=network.target
+[Service]
+User=liset
+Restart=always
+ExecStart=/home/liset/sl_app_uwsgi_nginx/.venv/bin/uwsgi --emperor /home/liset/sl_app_uwsgi_nginx/.venv/vassals --uid www-data --gid www-data
+[Install]
+WantedBy=multi-user.target
