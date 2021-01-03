@@ -6,7 +6,7 @@ services:
       context: .
     volumes: 
       - static_data:/vol/web
-      - /home/liset/dockerized_sl_app_NGINX_uWSGI/database:/db
+      - ./database:/db
     environment: 
       - SECRET_KEY=samplesecretkey123
       - ALLOWED_HOSTS=127.0.0.1,localhost
