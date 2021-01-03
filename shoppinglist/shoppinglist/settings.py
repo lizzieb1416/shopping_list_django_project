@@ -29,7 +29,7 @@ DEBUG = bool(int(os.environ.get('DEBUG', 0)))
 # DEBUG = True
 
 # ALLOWED_HOSTS = ['ShoppingList-env.eba-ncndieks.eu-west-3.elasticbeanstalk.com']
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.1.8']
 ALLOWED_HOSTS_ENV = os.environ.get('ALLOWED_HOSTS')
 if ALLOWED_HOSTS_ENV:
     ALLOWED_HOSTS.extend(ALLOWED_HOSTS_ENV.split(','))
