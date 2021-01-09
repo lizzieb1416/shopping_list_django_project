@@ -16,7 +16,7 @@ cd $HOME
 
 echo "Step 3/12: cloning repository"
 git clone https://github.com/lizzieb1416/shopping_list_django_project.git
-git checkout V0-alpha 
+git checkout deployement_prod_NGINX_uWSGI  
 
 # Envirorment creation and installation of python packages
 echo "Step 4/12: creating envirorment"
