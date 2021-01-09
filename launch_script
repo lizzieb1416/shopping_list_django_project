@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+
+echo "Step 1/12: starting deployment..."
+
+sudo apt-get -y update 
+sudo apt-get -y upgrade
+
+# Installation of packages
+
+packages="python3.8 python3-venv python3.8-dev gcc nginx git"
+
+echo "Step 2/12: installing pre-requisites..."
+sudo apt-get install packages -y
+
+cd $HOME
+
+echo "Step 3/12: cloning repository"
+git clone https://github.com/lizzieb1416/shopping_list_django_project.git
+git checkout V0-alpha 
+
+# Envirorment creation and installation of python packages
+echo "Step 4/12: creating envirorment"
+cd shopping_list_django_project
+python3 -m venv sl-env
+. ./sl-env/bin/activate
+python3 -m pip install -r ./requirements.txt 
+
+# set env variables for settings.py 
+echo "Step 5/12: exporting envirorment variables for settings.py"
+export ALLOWED_HOSTS=192.168.1.23
+export DEBUG="False" 
+
+# Nginx configuration 
+
+echo "Step 6/12: setting up Nginx"
+sudo sed 's/liset/$USER/g' ./nginx/sl.conf
+sudo ln -s ./nginx/sl.conf /etc/nginx/sites-available
+sudo ls -s ./nginx/sl.conf /etc/nginx/sites-enabled
+
+# Put static files in its place and restart the server
+echo "Step 7/12: collecting static files for Shopping List"
+python3 manage.py collecstatic 
+echo "Step 8/12: Restarting Nginx server"
+sudo /etc/init.d/nginx restart
+
+# Configure uWSGI for production
+echo "Step 9/12: setting up uWSGI for production"
+sudo sed 's/liset/$USER/g' sl_uwsgi.ini
+
+# Conf for emperor mode
+echo "Step 10/12: setting up emperor mode"
+mkdir ./sl-env/vassals 
+sudo ls -s ./sl_uwsgi.ini ./sl-env/vassals
+
+# symbolic link to create service to lounch the sl when the system boots
+echo "Step 11/12: creating Shopping List service"
+sudo sed 's/liset/$USER/g' emperor.uwsgi.service
+sudo ln -s ./emperor.uwsgi.service /etc/systemd/system
+
+# Enable service
+echo "Step 11/12: enable service"
+sudo systemctl enable emperor.uwsgi.service
+
+# HOW TO USE THIS SCRIPT 
+# ./launchscrip  --> creates the shopping list service in the machine
+# sudo systemctl start emperor.uwsgi.service --> starts the service
+# systemctl status emperor.uwsgi.service --> shows status of service
+# systemctl stop emperor.uwsgi.service --> stops service

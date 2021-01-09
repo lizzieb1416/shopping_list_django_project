@@ -25,11 +25,11 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'changeme')
 # SECRET_KEY = 'llpt7rsnsz0-v89l4w!-85y+9y#2nh)o5hgibd+!u1c4y5#m-!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = bool(int(os.environ.get('DEBUG', 0)))
-DEBUG = True
+DEBUG = bool(int(os.environ.get('DEBUG', 0)))
+#DEBUG = True
 
 # ALLOWED_HOSTS = ['ShoppingList-env.eba-ncndieks.eu-west-3.elasticbeanstalk.com']
-ALLOWED_HOSTS = ['192.168.1.22', 'smartngo.freeboxos.fr']
+ALLOWED_HOSTS = []
 ALLOWED_HOSTS_ENV = os.environ.get('ALLOWED_HOSTS')
 if ALLOWED_HOSTS_ENV:
     ALLOWED_HOSTS.extend(ALLOWED_HOSTS_ENV.split(','))
