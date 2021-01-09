@@ -69,6 +69,7 @@ sudo ln -s /home/liset/sl_app_uwsgi_nginx/emperor.uwsgi.service /etc/systemd/sys
 # Enable the service to allow it to execute on system boot and start it so you can test it without a reboot.
 sudo systemctl enable emperor.uwsgi.service
 sudo systemctl start emperor.uwsgi.service
+systemctl enable emperor.uwsgi.service # To see if the service is running 
 
 # Check the status of the service and stop it as follows:
 sudo systemctl status emperor.uwsgi.service
