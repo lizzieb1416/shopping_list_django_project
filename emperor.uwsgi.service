@@ -2,7 +2,7 @@
 Description=uwsgi emperor for shoppinglist website
 After=network.target
 [Service]
-User=liset
+User=temporarystuff
 Restart=always
 ExecStart=DIRECTORY/sl-env/bin/uwsgi --emperor DIRECTORY/sl-env/vassals --uid www-data --gid www-data
 [Install]
