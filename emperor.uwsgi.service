@@ -2,7 +2,7 @@
 Description=uwsgi emperor for shoppinglist website
 After=network.target
 [Service]
-User=liset
+User=temporarystuff
 Restart=always
 ExecStart=/home/liset/test2/shopping_list_django_project/sl-env/bin/uwsgi --emperor /home/liset/test2/shopping_list_django_project/sl-env/vassals --uid www-data --gid www-data
 [Install]
