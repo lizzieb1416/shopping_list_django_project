@@ -1,11 +1,10 @@
 [Unit]
 Description=uwsgi emperor for shoppinglist website
 After=network.target
-
 [Service]
-User=www-data
+User=liset
 Restart=always
-ExecStart=DIRECTORY/sl-env/bin/uwsgi --emperor DIRECTORY/sl-env/vassals --uid www-data --gid www-data
-
+ExecStart=/home/liset/test2/shopping_list_django_project/sl-env/bin/uwsgi --emperor /home/liset/test2/shopping_list_django_project/sl-env/vassals --uid www-data --gid www-data
 [Install]
 WantedBy=multi-user.target
+
