@@ -23,7 +23,7 @@ python3 -m pip install -r ./requirements.txt
 
 # set env variables for settings.py 
 echo "STEP 3/9: exporting environment variables for settings.py"
-sed "s/ALLOWED_HOSTS\ =\ \[\]/ALLOWED_HOSTS\ =\ [\'$(echo $ALLOWED_HOSTS)\']/g" $SHOPPINGLIST_DIR/shoppinglist/shoppinglist/settings.py
+sed -i "s/ALLOWED_HOSTS\ =\ \[\]/ALLOWED_HOSTS\ =\ [\'$(echo $ALLOWED_HOSTS)\']/g" $SHOPPINGLIST_DIR/shoppinglist/shoppinglist/settings.py
 export DEBUG=0 
 
 # Nginx configuration 
