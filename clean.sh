@@ -1,9 +1,10 @@
 #!/bin/sh
 
-rm -rf /etc/nginx/sites-available/sl.conf
-rm -rf /etc/nginx/sites-enable/sl.conf
-ln -s /etc/nginx/sites-enable/default /etc/nginx/sites-available/default
+rm -f /etc/nginx/sites-available/sl.conf
+rm -f /etc/nginx/sites-enabled/sl.conf
+rm -f /etc/nginx/sites-enabled/default
+ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
 rm -rf sl-env
 
-systemctl diable emperor.uwsgi.service
+systemctl disable emperor.uwsgi.service
