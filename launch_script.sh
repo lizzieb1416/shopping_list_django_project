@@ -2,14 +2,29 @@
 
 set -e
 
+FILE=/etc/systemd/system/emperor.uwsgi.service
+if [ -f "$FILE"]; then
+	echo "$FILE exists, reconfiguring the service..."
+	sudo rm -f /etc/nginx/sites-available/sl.conf
+	sudo rm -f /etc/nginx/sites-enabled/sl.conf
+	sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+	
+	sudo rm -rf sl-env
+	
+	sudo systemctl stop emperor.uwsgi.service
+	sudo systemctl disable emperor.uwsgi.service
+	sudo rm -f /etc/systemctl/system/emperor.uwsgi.service
+	sudo pkill -f uwsgi -9
+else 
+	echo "Starting service configuration"
+fi
+
 export SHOPPINGLIST_DIR=$PWD
 
 if [[ -z "${ALLOWED_HOSTS}" ]]; then
   echo "Please set ALLOWED_HOSTS environment var with the IP of this machine"
   exit 1
 fi
-
-
 
 # Installation of packages
 echo "STEP 1/9: installing pre-requisites..."

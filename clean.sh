@@ -7,5 +7,8 @@ ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
 rm -rf sl-env
 
+systemctl stop emperor.uwsgi.service
 systemctl disable emperor.uwsgi.service
 rm -f /etc/systemd/system/emperor.uwsgi.service
+sudo pkill -f uwsgi -9
+
