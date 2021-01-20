@@ -1,0 +1,35 @@
+{% extends 'accounts/base.html' %}
+
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <p><h3>Friends</h3></p>
+                {% for friend in friends %}
+                <a href="{% url 'accounts:profile_details_by_id' id=user.id %}">
+                    <h4>{{friend.username}}</h4>
+                </a>
+                <button type="button" class="btn btn-dark">Delete</button>
+                {% endfor %}
+            </div>
+            <div class="col-4">
+                <p><h3>Sugested users</h3></p>
+                {% for user in users %}
+                <a href="{% url 'accounts:profile_details_by_id' id=user.id %}">
+                    <h4>{{user.username}}</h4>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {% else %}
+        <p>Login <a href="/login">Here</a></p>
+    {% endif %}
+      
+{% endblock %}
+

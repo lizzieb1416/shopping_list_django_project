@@ -25,8 +25,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'changeme')
 # SECRET_KEY = 'llpt7rsnsz0-v89l4w!-85y+9y#2nh)o5hgibd+!u1c4y5#m-!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(int(os.environ.get('DEBUG', 0)))
-#DEBUG = True
+#DEBUG = bool(int(os.environ.get('DEBUG', 0)))
+DEBUG = True
 
 # ALLOWED_HOSTS = ['ShoppingList-env.eba-ncndieks.eu-west-3.elasticbeanstalk.com']
 ALLOWED_HOSTS = []
@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'main.apps.MainConfig',
     'nouser.apps.NouserConfig',
     'register.apps.RegisterConfig',
+    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [

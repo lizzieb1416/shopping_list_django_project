@@ -1,16 +1,19 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
-from .models import SList, Item
+from .models import SList, Item, UserProfile
 from django.db.models import Sum, Count
 from .forms import CreateNewList
 from django.contrib import messages
-    
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
+@login_required(login_url='login')
 def list_renderer(response, id):
-    sl = SList.objects.get(id=id)
+    # sl = SList.objects.get(id=id)
+    sl = response.user.userprofile.slist.get(id=id)
     
-    if sl in response.user.slist.all():
+    if sl in response.user.userprofile.slist.all():
     
         if response.method == "POST":
             print("posting: {}".format(response.POST))
@@ -40,9 +43,11 @@ def list_renderer(response, id):
     else:
         return HttpResponse("OOPS! YOU DON'T HAVE ACCES TO THIS PAGE")
 
+
+@login_required(login_url='login')
 def userhome(response): 
     # username = response.user.get_username()
-    sl = response.user.slist.all()
+    sl = response.user.userprofile.slist.all()
     print(sl)
     
  
@@ -59,7 +64,7 @@ def userhome(response):
             n = response.POST.get("input_sl")
             s = SList(name=n)
             s.save()
-            response.user.slist.add(s)
+            response.user.userprofile.slist.add(s)
             
             return HttpResponseRedirect("/%i" %s.id)
         
@@ -68,7 +73,8 @@ def userhome(response):
     else:           
         return render(response, "main/userhome.html") 
     
-
+    
+@login_required(login_url='login')
 def sort_list(response, id):
     sl = SList.objects.get(id=id)
     item_type_list = list(set([myitem.item_type for myitem in sl.item_set.all()]))
@@ -98,29 +104,15 @@ def sort_list(response, id):
                                                    "items_data":items_data,
                                                    })
     
-
-
-
-
-
-
-
-
-
-
-
-# def createlist(response):
-#     if response.method == "POST":
-#         form = CreateNewList(response.POST)
-        
-#         if form.is_valid():
-#             n = form.cleaned_data["name"]
-#             s = SList(name=n)
-#             s.save()
-#             response.user.slist.add(s)
     
-#         return HttpResponseRedirect("/%i" %s.id)
-    
-#     else:
-#         form = CreateNewList()
-#     return render(response, "main/createlist.html", {"form":form})
+
+
+
+
+
+
+
+
+
+
+

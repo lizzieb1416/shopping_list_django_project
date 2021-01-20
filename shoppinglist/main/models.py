@@ -1,12 +1,32 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import F
+from copy import deepcopy
+from django.db.models.signals import post_save
 
 # Create your models here.
 
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, related_name='userprofile', null=True, on_delete=models.CASCADE)
+    # name = models.CharField(max_length=200, null=True)
+    # last_name = models.CharField(max_length=200, null=True)
+    # email = models.CharField(max_length=200, null=True)
+    # date_created = models.DateTimeField(auto_created=True, null=True)
+    
+    def __str__(self):
+        return self.user.username
+    
+    
+def create_profile(sender, **kwargs):
+    if kwargs['created']:
+        UserProfile.objects.create(user=kwargs['instance'])
+    
+post_save.connect(create_profile, sender=User)
+    
 
 class SList(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="slist", null=True, blank=True)
+    profile = models.ManyToManyField(UserProfile, related_name="slist", null=True, blank=True)
+    #user = models.ManyToManyField(User, related_name="slist", null=True, blank=True)
     name = models.CharField(max_length=200)
     
     def __str__(self):
@@ -50,7 +70,37 @@ class SList(models.Model):
             total_items.append(item.quantity)
         
         return sum(total_items)
-    
+
+    def duplicate(self):
+        '''Duplicate a model instance, making copies of all foreign keys pointing to it.'''
+        
+        foreign_keys_to_copy = list(self.item_set.all())
+        print(foreign_keys_to_copy)
+        sl_copy = deepcopy(self)
+        sl_copy.pk = None
+        sl_copy.save()
+        
+        # self.pk = None
+        # self.save()
+        
+        foreign_keys = {}
+        
+        for fk in foreign_keys_to_copy:
+            fk.pk = None
+            
+            try:
+                foreign_keys[fk.__class__].append(fk)
+            except KeyError:
+                foreign_keys[fk.__class__] = [fk]
+                
+        for cls, list_of_fk in foreign_keys.items():
+            
+            cls.objects.bulk_create(list_of_fk)
+         
+
+        print(foreign_keys)
+
+
 class Item(models.Model):
     slist = models.ForeignKey(SList, on_delete=models.CASCADE)
     name = models.CharField(max_length=300)
@@ -103,4 +153,20 @@ class Item(models.Model):
         return cls(slist=slist, name=name, quantity=quantity, unit=unit, item_type=item_type, price=price, complete=complete)
 
         
-     
+class Friend(models.Model):
+    users = models.ManyToManyField(User)
+    current_user = models.ForeignKey(User, related_name="owner", null=True, on_delete=models.CASCADE)
+    
+    @classmethod
+    def make_friend(cls, current_user, new_friend):
+        friend, created = cls.objects.get_or_create(
+            current_user=current_user
+        )
+        friend.users.add(new_friend)
+        
+    @classmethod
+    def delete_friend(cls, current_user, new_friend):
+        friend, created = cls.objects.get_or_create(
+            current_user=current_user
+        )
+        friend.users.remove(new_friend)

@@ -11,12 +11,13 @@
             </button>
         </div> -->
 
+
         <h3>All your shopping lists:</h3>
 
             <form method="POST" action="#">
 
                     {% csrf_token %}
-                    {% for sl_list in user.slist.all %}
+                    {% for sl_list in user.userprofile.slist.all %}
                         <div class="row">     
                             <div class="col-11">
                                 <a href="/{{sl_list.id}}"class="list-group-item list-group-item-action">{{sl_list.name}}</a>
@@ -35,9 +36,13 @@
                         <button class="btn btn-success" type="submit" name="create_sl", value="create_sl" id="button-addon1">Create list</button>
                         <input type="text" name="input_sl" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
                     </div>
-                        
+  
             </form>
     
+            {% for message in messages %}
+                <p id="">{{message}}</p>
+            {% endfor %}
+
     {% else %}
         <p>Login <a href="/login">Here</a></p>
     {% endif %}
