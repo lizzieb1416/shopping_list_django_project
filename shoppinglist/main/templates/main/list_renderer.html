@@ -98,6 +98,18 @@
 
         <button type="submit", name="sortList", value="sortList", class="btn btn-info">Sort list</button>
         <button type="submit", name="deleteItem", value="deleteItem", class="btn btn-secondary">Delete Item</button>
+        <div class="col-auto">
+          <div class="input-group">
+              <select class="form-select" name="friend_to_share" id="inputGroupSelect04" aria-label="Example select with button addon">
+                <option selected>Choose a friend</option>
+                {% for user in friends %}
+                  <!-- <option name="friend_to_share" value={{friend}}>{{user.username}}</option> -->
+                  <option>{{user.username}}</option>
+                {% endfor %}
+              </select>
+              <button class="btn btn-info" type="submit" name="share_list", value="share_list">Share list</button>
+          </div>
+      </div>
 
     </form>
 

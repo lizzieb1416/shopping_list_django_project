@@ -7,21 +7,26 @@
 
     <div class="container">
         <div class="row">
+
             <div class="col-4">
                 <p><h3>Friends</h3></p>
                 {% for friend in friends %}
                 <a href="{% url 'accounts:profile_details_by_id' id=user.id %}">
                     <h4>{{friend.username}}</h4>
                 </a>
-                <button type="button" class="btn btn-dark">Delete</button>
+                <a class="btn btn-dark" href="{% url 'accounts:add_delete_friends' action='delete' id=friend.id %}" role="button">Delete</a>
                 {% endfor %}
             </div>
+
             <div class="col-4">
                 <p><h3>Sugested users</h3></p>
                 {% for user in users %}
-                <a href="{% url 'accounts:profile_details_by_id' id=user.id %}">
-                    <h4>{{user.username}}</h4>
-                </a>
+                    <a href="{% url 'accounts:profile_details_by_id' id=user.id %}">
+                        <h4>{{user.username}}</h4>
+                    </a>
+                    {% if not user in friends %}
+                        <a class="btn btn-light" href="{% url 'accounts:add_delete_friends' action='add' id=user.id %}" role="button">Add</a>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>

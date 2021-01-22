@@ -2,15 +2,17 @@ from django.shortcuts import render, redirect
 from .forms import RegisterForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import logout
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate 
+from django.contrib.auth import login 
 from nouser.views import login_nouser
 from django.contrib import messages
 from main.decorators import unauthenticated_user
-from main.models import UserProfile
+from main.models import UserProfile  
+
+from django.contrib.auth.views import LoginView
 
 
-
-@unauthenticated_user # TODO look for the way to apply this to the login page too
+@unauthenticated_user 
 def register(response):    
     
     if response.method == "POST":
@@ -22,7 +24,7 @@ def register(response):
             new_user = authenticate(username=form.cleaned_data['username'],
                                     password=form.cleaned_data['password1']
                                     )
-            login(response, new_user)
+            login(response, new_user)  
                                      
             # Welcome message
             user = form.cleaned_data.get('username')
@@ -37,19 +39,4 @@ def register(response):
     return render(response, "register/register.html", {"form":form})
 
 
-# TODO make a login page, I dont like the login page by default from Django 
-# def loginPage(response):
-    
-#     if response.method == 'POST':
-#         username = response.POST.get('username')
-#         password = response.POST.get('password')
-        
-#         user = authenticate(response, username=username, password=password)
-        
-#         if user is not None:
-#             login(response, user)
-#             return redirect("/userhome")
-#         else:
-#             return render(response, 'registration/login.html',{})
-    
-#     return render(response, 'registration/login.html', {})
+

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
-from .models import SList, Item, UserProfile
+from .models import SList, Item, UserProfile, Friend
 from django.db.models import Sum, Count
 from .forms import CreateNewList
 from django.contrib import messages
@@ -10,10 +10,14 @@ from django.contrib.auth.decorators import login_required
 
 @login_required(login_url='login')
 def list_renderer(response, id):
-    # sl = SList.objects.get(id=id)
-    sl = response.user.userprofile.slist.get(id=id)
+    sl = SList.objects.get(id=id)
+    #sl = response.user.userprofile.slist.get(id=id)
+    # list_owner = Friend.objects.get(current_user=response.user)
+    # friends = list_owner.users.all()
     
-    if sl in response.user.userprofile.slist.all():
+    friends = response.user.friends.get().users.all()
+        
+    if sl in response.user.slist.all():
     
         if response.method == "POST":
             print("posting: {}".format(response.POST))
@@ -30,7 +34,13 @@ def list_renderer(response, id):
             elif response.POST.get("sortList"):
                 sort_list(response, sl.id)
                 return HttpResponseRedirect("/%i/sortlist" %sl.id)
-
+            
+            elif response.POST.get("share_list"):
+                
+                username_friend = response.POST.get("friend_to_share")
+                friend = User.objects.get(username=username_friend)
+                
+                sl.user.add(friend)            
                 
             return HttpResponseRedirect("/%i" %sl.id)
         
@@ -38,7 +48,7 @@ def list_renderer(response, id):
             total = sl.item_set.aggregate(total_price=Sum("price"), total_items=Count('name'))
             print(total)
             
-            return render(response, "main/list_renderer.html", {"sl":sl})
+            return render(response, "main/list_renderer.html", {"sl":sl, "friends":friends})
 
     else:
         return HttpResponse("OOPS! YOU DON'T HAVE ACCES TO THIS PAGE")
@@ -47,9 +57,8 @@ def list_renderer(response, id):
 @login_required(login_url='login')
 def userhome(response): 
     # username = response.user.get_username()
-    sl = response.user.userprofile.slist.all()
+    sl = response.user.slist.all()
     print(sl)
-    
  
     if response.method == "POST":
         print(response.POST)
@@ -64,7 +73,7 @@ def userhome(response):
             n = response.POST.get("input_sl")
             s = SList(name=n)
             s.save()
-            response.user.userprofile.slist.add(s)
+            response.user.slist.add(s)
             
             return HttpResponseRedirect("/%i" %s.id)
         

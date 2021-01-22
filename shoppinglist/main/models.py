@@ -25,8 +25,8 @@ post_save.connect(create_profile, sender=User)
     
 
 class SList(models.Model):
-    profile = models.ManyToManyField(UserProfile, related_name="slist", null=True, blank=True)
-    #user = models.ManyToManyField(User, related_name="slist", null=True, blank=True)
+    #profile = models.ManyToManyField(UserProfile, related_name="slist", null=True, blank=True)
+    user = models.ManyToManyField(User, related_name="slist", null=True, blank=True)
     name = models.CharField(max_length=200)
     
     def __str__(self):
@@ -155,7 +155,7 @@ class Item(models.Model):
         
 class Friend(models.Model):
     users = models.ManyToManyField(User)
-    current_user = models.ForeignKey(User, related_name="owner", null=True, on_delete=models.CASCADE)
+    current_user = models.ForeignKey(User, related_name="friends", null=True, blank=True, on_delete=models.CASCADE)
     
     @classmethod
     def make_friend(cls, current_user, new_friend):

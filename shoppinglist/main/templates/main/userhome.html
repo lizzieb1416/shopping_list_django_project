@@ -17,14 +17,14 @@
             <form method="POST" action="#">
 
                     {% csrf_token %}
-                    {% for sl_list in user.userprofile.slist.all %}
+                    {% for sl_list in user.slist.all %}
                         <div class="row">     
                             <div class="col-11">
                                 <a href="/{{sl_list.id}}"class="list-group-item list-group-item-action">{{sl_list.name}}</a>
                             </div>
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
-                                <input type="checkbox" value="clicked", name="c{{sl_list.id}}">
+                                    <input type="checkbox" value="clicked", name="c{{sl_list.id}}">
                                 </div>
                             </div>
                         </div>

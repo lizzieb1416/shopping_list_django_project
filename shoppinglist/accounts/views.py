@@ -27,8 +27,8 @@ def profile_details(response, id=None):
 def friends(response):
     
     users = User.objects.exclude(id=response.user.id)
-    friend = Friend.objects.get(current_user=response.user)
-    friends = friend.users.all()
+        
+    friends = response.user.friends.get().users.all()
     
     args = {'users':users, 'friends':friends}
     return render(response, "accounts/friends.html", args)
