@@ -35,6 +35,10 @@ def list_renderer(response, id):
                 sort_list(response, sl.id)
                 return HttpResponseRedirect("/%i/sortlist" %sl.id)
             
+            elif response.POST.get("delete_list"):
+                SList.delete_slist(response.POST)
+                return redirect("/userhome")
+            
             elif response.POST.get("share_list"):
                 
                 username_friend = response.POST.get("friend_to_share")
@@ -62,20 +66,17 @@ def userhome(response):
  
     if response.method == "POST":
         print(response.POST)
-        
-        if response.POST.get("delete_sl"):
-            for s in sl:
-                if response.POST.get("c" + str(s.id)) == "clicked":
-                    s.delete()
-                    print("{} deleted".format(s))
-               
+                    
+        if response.POST.get("delete_list"):
+            sl_id = int(response.POST["delete_list"])
+            sl = SList.objects.get(id=sl_id)
+            sl.delete() 
+                        
         elif response.POST.get("create_sl"):
             n = response.POST.get("input_sl")
             s = SList(name=n)
             s.save()
             response.user.slist.add(s)
-            
-            return HttpResponseRedirect("/%i" %s.id)
         
         return HttpResponseRedirect("/userhome")
     

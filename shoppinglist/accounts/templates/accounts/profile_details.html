@@ -2,6 +2,8 @@
 
 <title>Profile</title>
 
+{% block title %}Shopping list | profile details{% endblock %}
+
 {% block content %}
 
     {% if user.is_authenticated %}
@@ -15,7 +17,7 @@
         {% endif %}
 
         <div class="container">
-            <h1>Profile</h1>
+            <p><h1>Profile details</h1></p>
             <p>Username: {{user.username}}</p>
             <p>First name: {{user.first_name}}</p>
             <p>Last name: {{user.last_name}}</p>

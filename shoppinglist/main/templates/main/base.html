@@ -34,6 +34,9 @@
         margin-top: 20px;
         
       }
+      #list_name {
+        padding-top: 20px;
+      }
 
     </style>
 
@@ -66,15 +69,16 @@
                   <li class="nav-item">
                     <a class="nav-link" href="/profile/friends">Friends</a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="/logout">Logout</a>
-                  </li>
+
                 </ul>
               </div>
               <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/profile/details">{{ user.get_username }}</a>
+                      <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile/details"><h4>{{ user.get_username }}</h4></a>
                     </li>
                 </ul>
               </div>
@@ -93,7 +97,7 @@
       </div>
     </div>
 
-    <div class="footer fixed-bottom bg-light">
+    <!-- <div class="footer fixed-bottom bg-light">
       <div class="container">
         <div class="row">
           <div class="col">
@@ -107,7 +111,7 @@
           </div>
         </div>
       </div>    
-    </div> 
+    </div>  -->
     
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

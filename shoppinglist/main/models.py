@@ -37,6 +37,7 @@ class SList(models.Model):
             if response_post.get("c" + str(item.id)) == "clicked":
                 item.delete()        
     
+    
     def add_item_from_response_post(self, response_post):
         name = response_post.get("name")
         item_type = response_post.get("item_type")

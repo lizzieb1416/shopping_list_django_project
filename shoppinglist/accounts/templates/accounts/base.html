@@ -20,9 +20,13 @@
         padding: 1rem;
         margin: 4px;
         border: 3px;
-        /* border: 3px solid black; */
-     
       }
+
+      #cards {
+        padding-top: 15px;
+        padding-bottom: 15px;
+      }
+     
       p {
         padding: 1rem;
       }
@@ -33,6 +37,10 @@
         text-align: center;
         margin-top: 20px;
         
+      }
+      #first_colum {
+        padding-top: 70px;
+        padding-bottom: 70px;
       }
 
     </style>
@@ -64,7 +72,10 @@
               <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/logout">Logout</a>
+                      <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile/details"><h4>{{ user.get_username }}</h4></a>
                     </li>
                 </ul>
               </div>
@@ -74,23 +85,24 @@
       </div>  
     </div>
 
-    <div class="container">
-        <div class="row">
-          <div class="col-4">
-            <div class="list-group">
-              <a href="/profile/details" class="list-group-item list-group-item-action">
-                Details
-              </a>
-              <a href="/profile/friends" class="list-group-item list-group-item-action" >Friends</a>
-              <a href="/profile/edit_profile" class="list-group-item list-group-item-action">Edit profile</a>
-              <a href="/profile/change_password" class="list-group-item list-group-item-action">Change password</a>
+    <div class="container px-4">
+        <div class="row gx-5">
+          <div class="col-sm-4" id="first_colum">
+            <div class="p-3 border bg-light"> 
+              <div class="list-group">
+                <a href="/profile/details" class="list-group-item list-group-item-action">
+                  Details
+                </a>
+                <a href="/profile/friends" class="list-group-item list-group-item-action" >Friends</a>
+                <a href="/profile/edit_profile" class="list-group-item list-group-item-action">Edit profile</a>
+                <a href="/profile/change_password" class="list-group-item list-group-item-action">Change password</a>
+              </div>
             </div>
           </div>
           <div class="col-8">
               {% block content %}
               {% endblock %}
           </div>
-      </div>
       </div>
     </div>
 
