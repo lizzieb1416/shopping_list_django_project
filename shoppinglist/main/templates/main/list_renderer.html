@@ -1,18 +1,34 @@
 {% extends 'main/base.html' %}
 
-{% block title %}Shopping list - {{sl.name}}{% endblock %}
+{% block title %}{{sl.name}} | Shopping list{% endblock %}
 
 {% block content %}
-    <h1>{{sl.name}}</h1>
+    <h1 id="list_name">{{sl.name}}</h1>
 
     <form method="POST" action="#">
       {% csrf_token %}
     
+      <br>
+      <div class="d-grid gap-2 d-md-block">
+        <button class="btn btn-dark" type="submit", name="deleteItem", value="deleteItem", class="btn btn-secondary">Delete selected item</button>
+        <button class="btn btn-secondary" type="submit", name="sortList", value="sortList", class="btn btn-success">Sort items by category</button>
+  
+          <select class="form-select" name="friend_to_share" id="inputGroupSelect04" aria-label="Example select with button addon">
+            <option selected>Choose a friend</option>
+            {% for user in friends %}
+              <option>{{user.username}}</option>
+            {% endfor %}
+          </select>
+          <button class="btn btn-success" type="submit" name="share_list", value="share_list">Share list</button>
+      </div>
+
+      <br>
+      <br>
         <div class="row">
-          <div class="col">
+          <div class="col-sm-6 col-md-2">
             <input type="text" name="name" class="form-control" placeholder="Name">
           </div>
-          <div class="col">
+          <div class="col-sm-6 col-md-2">
             <select name="item_type" id="input_item_type" class="form-control">
               <option selected>Category</option>
               <option>fruit</option>
@@ -28,10 +44,10 @@
               <option>other</option>
             </select>
           </div>
-          <div class="col">
+          <div class="col-sm-6 col-md-2">
             <input type="number" name="quantity" class="form-control" placeholder="Quantity">
           </div>
-          <div class="col">
+          <div class="col-sm-6 col-md-2">
             <select name="unit" id="input_unit" class="form-control">
               <option selected>Unit</option>
               <option>kg</option>
@@ -44,11 +60,11 @@
               <option>other</option>
             </select>
           </div>
-          <div class="col">
+          <div class="col-sm-6 col-md-2">
             <input type="number" step="any" name="price" class="form-control" placeholder="Price/unity">
           </div>
-          <div class="col">
-            <button type="submit", name="addItem", value="addItem", class="btn btn-primary">Add Item</button>
+          <div class="col-sm-6 col-md-2">
+            <button type="submit", name="addItem", value="addItem", class="btn btn-info">Add Item</button>
           </div>
         </div>
         
@@ -90,14 +106,15 @@
             {% endfor %}
           </tbody>
         </table>
-
-        <div class="list-group">
-          <label><h4>Total price: </h4>{{sl.total_sl_price}} €</label>
-          <label><h4>Total items: </h4>{{sl.total_items_in_list}}</label>
+        
+        <br>
+        <div class="row">
+              <div class="col-auto"><label><h4>Total price: </h4>{{sl.total_sl_price}} €</label></div>
+              <div class="col-auto"><label><h4>Total items: </h4>{{sl.total_items_in_list}}</label></div>
         </div>
 
-        <button type="submit", name="sortList", value="sortList", class="btn btn-info">Sort list</button>
-        <button type="submit", name="deleteItem", value="deleteItem", class="btn btn-secondary">Delete Item</button>
+
+        
 
     </form>
 

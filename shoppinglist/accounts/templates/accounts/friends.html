@@ -1,0 +1,54 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Shopping list | friends{% endblock %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+
+    <div class="container">
+        <p><h1>Friends</h1></p>
+
+        <div class="row">
+            {% for friend in friends %}
+            <div class="col-sm-6" id="cards">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <a href="{% url 'accounts:profile_details_by_id' id=friend.id %}">
+                    {{friend.username}}
+                    </h5></a>
+                  <p class="card-text">{{friend.email}}</p>
+                  <a class="btn btn-dark" href="{% url 'accounts:add_delete_friends' action='delete' id=friend.id %}" role="button">Delete</a>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="container">
+            <p><h1>Community</h1></p>
+            {% for user in users %}
+                <div class="row g-3">
+                    <div class="col-3">
+                        <a href="{% url 'accounts:profile_details_by_id' id=user.id %}">
+                            <h4>{{user.username}}</h4>
+                        </a>
+                    </div>
+                    <div class="col-3">
+                     {% if not user in friends %}
+                        <a class="btn btn-light" href="{% url 'accounts:add_delete_friends' action='add' id=user.id %}" role="button">Add</a>
+                     {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+       
+    </div>
+
+    {% else %}
+        <p>Login <a href="/login">Here</a></p>
+    {% endif %}
+      
+{% endblock %}
+

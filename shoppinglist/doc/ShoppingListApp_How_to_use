@@ -1,0 +1,51 @@
+This is the server of an application web where you can register to create an user to add your shopping lists (SL). You can create several SLs and add items of different types to each one. At the end of the SL you'll have the calculation of the final price and the total quantity of items added. 
+
+It uses the Django web framework, uWSGI as web server gateway interface and Nginx server to deploy the static files. 
+The configuration is made on Ubuntu. This prototype can be launched in both developpement and production stage.
+
+Two ways for deployement where developed. The first one is an script that configures the SL in the machine as a service. The second one uses docker containers and Docker Compose to run the application.
+
+*USING THE SCRIPT 
+
+type the follow commands on your terminal:
+
+1. updade and upgrade la machine
+	apt-get update
+	apt-get upgrade
+2. Clone the git repository 
+	git clone https://github.com/lizzieb1416/shopping_list_django_project.git
+3. Change branch
+	git checkout --track origin/deployement_prod_NGINX_uWSGI
+4. Set and environment variable for ALLOWED_HOSTS
+	export ALLOWED_HOSTS=<ip_machine>
+5. Launch the script
+	./launch_script.sh
+6. The service is now active in the machine for production.You can now visit <ip_machine>:80 in you browser. Changes can be made directly to the app code if necessary while it in production stage and there's no need to stop the service or reload it. With 	this configuration uWSGI will start up when the system boots.
+7. To see the status of the service, to stop it and to restart it run the following commands	
+	systemctl status emperor.uwsgi.service
+	systemctl stop emperor.uwsgi.service
+	systemctl start emperor.uwsgi.service
+8. To delete the service from the machine run 
+	sudo ./clean.sh 
+
+
+TO DO 
+Create a service for Nginx too. Because now, when I stop the machine and I start it up again, there's uWSGI that is launched, but not Nginx. To restart Nginx I have to type sudo /etc/init.d/nginx restart.
+
+*USING DOCKER CONTAINERS 
+
+type the follow commands on your terminal:
+
+1. updade and upgrade la machine
+	apt-get update
+	apt-get upgrade
+2. Install Docker and Docker Compose
+	sudo apt install docker.io
+	sudo systemctl status docker
+	sudo apt install docker-compose
+3. Launch for development
+	sudo docker-compose up
+	Connect to it in the browser tapping <ip_of_local_host>:8000
+4. Launch for production 
+	sudo docker-compose -f docker-compose-deploy.yml up
+	Connect to it in the browser tapping <ip_of_local_host>:8080

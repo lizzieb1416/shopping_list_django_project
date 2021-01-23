@@ -1,0 +1,78 @@
+
+
+# Update server
+sudo apt-get update
+sudo apt-get upgrade
+
+# Install and conf Python and env. 
+sudo apt-get install python3.8
+python3 --version
+python3 -m venv sl-env
+source sl-env/bin/activate (activate envirorment)
+pip install -r requirements.txt --> django, uwsgi, crispy forms 
+
+# Configure uWSGI
+sudo apt-get install python3.8-dev
+sudo apt-get install gcc
+  #pip install uwsgi
+
+# Open port to deploy in developpement
+sudo apt-get install ufw
+sudo ufw allow 8000
+python manage.py runserver <ip_server>:8000
+
+# make sure apache is stopped and port 80 is available for nginx to serve
+sudo apt-get autoremove apache2
+sudo netstat -tulnp # to see the open ports
+sudo ufw allow 80/tcp # Don't know if this is necessary
+sudo apt-get install nginx 
+sudo reboot 
+sudo ufw allow 'Nginx HTTP'
+systemctl status nginx # Chech if Nginx is working 
+
+
+# Configure the Nginx web server 
+
+Let’s tell Nginx about our Django project by creating a configuration file at /etc/nginx/sites-available/sl.conf  
+
+make the symbolic link of /home/liset/sl_app_uwsgi_nginx/nginx/sl.conf
+ to /etc/nginx/sites-available/sl.conf and /etc/nginx/sites-enabled/
+			
+sudo ln -s /home/liset/sl_app_uwsgi_nginx/nginx/sl.conf /etc/nginx/sites-available
+sudo ln -s /home/liset/sl_app_uwsgi_nginx/nginx/sl.conf /etc/nginx/sites-enabled/
+
+# Put statics in its place and restart server:
+python manage.py collectstatic
+sudo /etc/init.d/nginx restart
+
+# Get Nginx, uWSGI, and Django to Work Together
+cd /home/liset/sl_app_uwsgi_nginx/shoppinglist
+uwsgi --socket shoppinglist.sock --module shoppinglist.wsgi --chmod-socket=666
+in the web browser visit <ip_server>:80
+
+# Launch in prod:
+cd /home/liset/sl_app_uwsgi_nginx/
+uwsgi --ini sl_uwsgi.ini
+ps aux # See the process running in bg.
+ps aux | grep uwsgi # See only the uwsgi process running
+killall -s INT uwsgi # Kill all the uwsgi process
+
+
+# Launch in prod in emperor mode:
+mkdir vassals
+sudo ln -s /home/liset/sl_app_uwsgi_nginx/sl_uwsgi.ini /home/liset/sl_app_uwsgi_nginx/.venv/vassals/
+uwsgi --emperor /home/liset/sl_app_uwsgi_nginx/.venv/vassals/ --uid www-data --gid www-data
+
+# symbolic link to allow system to boot 
+sudo ln -s /home/liset/sl_app_uwsgi_nginx/emperor.uwsgi.service /etc/systemd/system
+
+# Enable the service to allow it to execute on system boot and start it so you can test it without a reboot.
+sudo systemctl enable emperor.uwsgi.service
+sudo systemctl start emperor.uwsgi.service
+
+# Check the status of the service and stop it as follows:
+sudo systemctl status emperor.uwsgi.service
+sudo systemctl stop emperor.uwsgi.service
+
+
+
