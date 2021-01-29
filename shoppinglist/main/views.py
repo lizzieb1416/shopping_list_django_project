@@ -71,12 +71,14 @@ def userhome(response):
             sl_id = int(response.POST["delete_list"])
             sl = SList.objects.get(id=sl_id)
             sl.delete() 
+            return redirect("/userhome")
                         
         elif response.POST.get("create_sl"):
             n = response.POST.get("input_sl")
             s = SList(name=n)
             s.save()
             response.user.slist.add(s)
+            return redirect("/userhome")
         
         return HttpResponseRedirect("/userhome")
     
