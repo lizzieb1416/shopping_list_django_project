@@ -43,8 +43,8 @@ export DEBUG=0
 
 # Nginx configuration 
 echo "STEP 4/9: setting up Nginx"
-sed -i "s/DIRECTORY/$(echo $SHOPPINGLIST_DIR | sed "s/\//\\\\\//g")/g" $SHOPPINGLIST_DIR/nginx/sl.conf
-sudo ln -s $SHOPPINGLIST_DIR/nginx/sl.conf /etc/nginx/sites-available
+sed -i "s/DIRECTORY/$(echo $SHOPPINGLIST_DIR | sed "s/\//\\\\\//g")/g" $SHOPPINGLIST_DIR/deploy_emperor_mode/nginx/sl.conf   ####!!!
+sudo ln -s $SHOPPINGLIST_DIR/deploy_emperor_mode/nginx/sl.conf /etc/nginx/sites-available  ######!!
 sudo ln -s /etc/nginx/sites-available/sl.conf /etc/nginx/sites-enabled/sl.conf
 sudo rm -f /etc/nginx/sites-enabled/default
 
@@ -58,16 +58,16 @@ sudo /etc/init.d/nginx restart
 
 # Conf for emperor mode
 echo "STEP 7/9: setting up emperor mode"
-sed -i "s/DIRECTORY/$(echo $SHOPPINGLIST_DIR | sed "s/\//\\\\\//g")/g" $SHOPPINGLIST_DIR/sl_uwsgi.ini
+sed -i "s/DIRECTORY/$(echo $SHOPPINGLIST_DIR | sed "s/\//\\\\\//g")/g" $SHOPPINGLIST_DIR/deploy_emperor_mode/sl_uwsgi.ini  #####!!!
 mkdir $SHOPPINGLIST_DIR/sl-env/vassals 
-sudo ln -s $SHOPPINGLIST_DIR/sl_uwsgi.ini $SHOPPINGLIST_DIR/sl-env/vassals
+sudo ln -s $SHOPPINGLIST_DIR/deploy_emperor_mode/sl_uwsgi.ini $SHOPPINGLIST_DIR/sl-env/vassals
 
-# symbolic link to create service to lounch the sl when the system boots
+# symbolic link to create service to launch the sl when the system boots
 echo "STEP 8/9: creating Shopping List service"
-sed -i "s/DIRECTORY/$(echo $SHOPPINGLIST_DIR | sed "s/\//\\\\\//g")/g" $SHOPPINGLIST_DIR/emperor.uwsgi.service
-sed -i "s/temporarystuff/$(echo $USER)/g" $SHOPPINGLIST_DIR/emperor.uwsgi.service
+sed -i "s/DIRECTORY/$(echo $SHOPPINGLIST_DIR | sed "s/\//\\\\\//g")/g" $SHOPPINGLIST_DIR/deploy_emperor_mode/emperor.uwsgi.service #####!!!
+sed -i "s/temporarystuff/$(echo $USER)/g" $SHOPPINGLIST_DIR/deploy_emperor_mode/emperor.uwsgi.service  ###!!!!
 #sudo ln -s $SHOPPINGLIST_DIR/emperor.uwsgi.service /etc/systemd/system
-sudo cp $SHOPPINGLIST_DIR/emperor.uwsgi.service /etc/systemd/system
+sudo cp $SHOPPINGLIST_DIR/deploy_emperor_mode/emperor.uwsgi.service /etc/systemd/system
 
 # Enable service
 echo "STEP 9/9: enable service"
