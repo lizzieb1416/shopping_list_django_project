@@ -1,43 +1,47 @@
 {% extends 'main/base.html' %}
-
-
+{% block title %}{{user.username}} home | Shopping list{% endblock %}
 {% block content %}
 
     {% if user.is_authenticated %}
-        <!-- <div class="alert alert-info alert-dismissible fade show" role="alert">
-            Hello {{username}} You succesfully logged in!
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div> -->
 
-        <h3>All your shopping lists:</h3>
+        <p><h3>All your shopping lists:</h3></p>
 
             <form method="POST" action="#">
 
                     {% csrf_token %}
                     {% for sl_list in user.slist.all %}
                         <div class="row">     
-                            <div class="col-11">
+            
+                            <div class="col-8">
                                 <a href="/{{sl_list.id}}"class="list-group-item list-group-item-action">{{sl_list.name}}</a>
                             </div>
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">
-                                <input type="checkbox" value="clicked", name="c{{sl_list.id}}">
-                                </div>
+                            <div class="col-2">
+                                <button type="submit" value="{{sl_list.id}}" name="delete_list" class="btn btn-warning">Delete</button>
                             </div>
+
+
                         </div>
                     {% endfor %}
+                </form>
 
-                    <button type="submit", name="delete_sl", value="delete_sl", class="btn btn-secondary">Delete list</button>
-                
-                    <div class="input-group mb-3">
-                        <button class="btn btn-success" type="submit" name="create_sl", value="create_sl" id="button-addon1">Create list</button>
-                        <input type="text" name="input_sl" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                <form method="POST" action="#">
+                    {% csrf_token %}
+                    <br>
+                    <div class="row">
+                        <div class="col-9">
+                            <div class="input-group mb-3">
+                                <button class="btn btn-info" type="submit" name="create_sl", value="create_sl" id="button-addon1">Create list</button>
+                                <input type="text" name="input_sl" class="form-control" placeholder="list name" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                            </div>
+                        </div>
                     </div>
-                        
-            </form>
+                </form>
+            
     
+            {% for message in messages %}
+                <p id="">{{message}}</p>
+            {% endfor %}
+
     {% else %}
         <p>Login <a href="/login">Here</a></p>
     {% endif %}
