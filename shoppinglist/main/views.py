@@ -15,7 +15,12 @@ def list_renderer(response, id):
     # list_owner = Friend.objects.get(current_user=response.user)
     # friends = list_owner.users.all()
     
-    friends = response.user.friends.get().users.all()
+    if response.user.friends.all().exists():
+        friends = response.user.friends.get().users.all()
+    else:
+        friends = [ ]
+    
+    #friends = response.user.friends.get().users.all()
         
     if sl in response.user.slist.all():
     
