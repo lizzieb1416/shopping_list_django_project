@@ -28,10 +28,18 @@ def friends(response):
     
     users = User.objects.exclude(id=response.user.id)
         
-    friends = response.user.friends.get().users.all()
+    if response.user.friends.all().exists():
+        friends = response.user.friends.get().users.all()
+    else:
+        friends = [ ]
+
+    #friends = response.user.friends.get().users.all()
     
     args = {'users':users, 'friends':friends}
     return render(response, "accounts/friends.html", args)
+
+
+
 
 
 @login_required(login_url='login')   

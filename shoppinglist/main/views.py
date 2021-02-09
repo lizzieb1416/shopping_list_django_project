@@ -15,7 +15,12 @@ def list_renderer(response, id):
     # list_owner = Friend.objects.get(current_user=response.user)
     # friends = list_owner.users.all()
     
-    friends = response.user.friends.get().users.all()
+    if response.user.friends.all().exists():
+        friends = response.user.friends.get().users.all()
+    else:
+        friends = [ ]
+    
+    #friends = response.user.friends.get().users.all()
         
     if sl in response.user.slist.all():
     
@@ -71,12 +76,14 @@ def userhome(response):
             sl_id = int(response.POST["delete_list"])
             sl = SList.objects.get(id=sl_id)
             sl.delete() 
+            return redirect("/userhome")
                         
         elif response.POST.get("create_sl"):
             n = response.POST.get("input_sl")
             s = SList(name=n)
             s.save()
             response.user.slist.add(s)
+            return redirect("/userhome")
         
         return HttpResponseRedirect("/userhome")
     

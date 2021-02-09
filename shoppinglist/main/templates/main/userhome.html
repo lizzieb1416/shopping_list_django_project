@@ -22,7 +22,10 @@
 
                         </div>
                     {% endfor %}
-                        
+                </form>
+
+                <form method="POST" action="#">
+                    {% csrf_token %}
                     <br>
                     <div class="row">
                         <div class="col-9">
@@ -32,8 +35,8 @@
                             </div>
                         </div>
                     </div>
-  
-            </form>
+                </form>
+            
     
             {% for message in messages %}
                 <p id="">{{message}}</p>
