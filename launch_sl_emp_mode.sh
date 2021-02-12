@@ -50,9 +50,23 @@ sudo rm -f /etc/nginx/sites-enabled/default
 
 # Put static files in its place and restart the server
 echo "STEP 5/9: collecting static files for Shopping List"
+#python3 $SHOPPINGLIST_DIR/shoppinglist/manage.py makemigrations
+#python3 $SHOPPINGLIST_DIR/shoppinglist/manage.py migrate
+python3 $SHOPPINGLIST_DIR/shoppinglist/manage.py collectstatic --noinput
+
+echo "STEP 4.1/10: Installing postgreSQL "
+sudo apt-get install libpq-dev
+sudo apt install postgresql postgresql-contrib
+echo "STEP 4.2/10: Creating user for the database"
+sudo -u postgres createuser $USER -s
+echo "STEP 4.3/10: Creating database: sl_db"
+sudo -u postgres createdb sl_db
+#echo "STEP 4.4/10: Linking database to user"
+#psql -d sl_db
+echo "STEP 4.4/10: Migrating to database"
 python3 $SHOPPINGLIST_DIR/shoppinglist/manage.py makemigrations
 python3 $SHOPPINGLIST_DIR/shoppinglist/manage.py migrate
-python3 $SHOPPINGLIST_DIR/shoppinglist/manage.py collectstatic --noinput
+
 echo "STEP 6/9: restarting Nginx server"
 sudo /etc/init.d/nginx restart
 
@@ -73,16 +87,6 @@ sudo cp $SHOPPINGLIST_DIR/deploy_emperor_mode/emperor.uwsgi.service /etc/systemd
 echo "STEP 9/9: enable service"
 sudo systemctl enable emperor.uwsgi.service
 sudo systemctl start emperor.uwsgi.service
-
-echo "STEP 4.1/10: Installing postgreSQL "
-sudo apt-get install libpq-dev
-sudo apt install postgresql postgresql-contrib
-echo "STEP 4.2/10: Creating user for the database"
-sudo -u postgres createuser $USER -s
-echo "STEP 4.3/10: Creating database: sl_db"
-sudo -u postgres createdb sl_db
-echo "STEP 4.4/10: Linking database to user"
-psql -d sl_db
 
 
 echo "Shopping List installed and available at http://$ALLOWED_HOSTS with your browser"
