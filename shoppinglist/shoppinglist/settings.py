@@ -1,3 +1,4 @@
+
 """
 Django settings for shoppinglist project.
 
@@ -93,14 +94,15 @@ WSGI_APPLICATION = 'shoppinglist.wsgi.application'
 #}
 DATABASES = {
     'default': {
-        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.postgresql"),
-        "NAME": os.environ.get("SQL_DATABASE", "sl_db"),
-        "USER": os.environ.get("SQL_USER", "postgres"),         
-        "PASSWORD": os.environ.get("SQL_PASSWORD", "postgres"), 
-        "HOST": os.environ.get("SQL_HOST", "localhost"),
-        "PORT": os.environ.get("SQL_PORT", "5432"),
+        'ENGINE': os.environ.get('SQL_ENGINE', 'django.db.backends.sqlite3'),
+        'NAME': os.environ.get('SQL_DATABASE', str(BASE_DIR / 'db.sqlite3')),
+	'USER': os.environ.get('SQL_PASSWORD', 'postgres'),
+	'PASSWORD': os.environ.get('SQL_PASSWORD', 'postgres'),
+	'HOST': os.environ.get('SQL_HOST', 'localhost'),
+	'PORT': os.environ.get('SLQ_PORT', '5432'),
      }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
