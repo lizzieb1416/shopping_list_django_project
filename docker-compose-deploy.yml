@@ -8,6 +8,8 @@ services:
       - static_data:/vol/web
       - ./database:/db
     environment: 
+      - STATIC_ROOT=/vol/web/static
+      # - MEDIA_ROOT=/vol/web/media
       - SECRET_KEY=samplesecretkey123
       - ALLOWED_HOSTS=127.0.0.1,localhost
       - DEBUG=1
