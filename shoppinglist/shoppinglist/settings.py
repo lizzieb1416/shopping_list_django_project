@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'changeme')
 DEBUG = True
 
 # ALLOWED_HOSTS = ['ShoppingList-env.eba-ncndieks.eu-west-3.elasticbeanstalk.com']
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.1.8']
 ALLOWED_HOSTS_ENV = os.environ.get('ALLOWED_HOSTS')
 if ALLOWED_HOSTS_ENV:
     ALLOWED_HOSTS.extend(ALLOWED_HOSTS_ENV.split(','))
@@ -91,6 +91,12 @@ WSGI_APPLICATION = 'shoppinglist.wsgi.application'
 #        'NAME': str(BASE_DIR / 'db.sqlite3'),
 #    }
 #}
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'sl_db',
+    }
+}
 
 
 # Password validation
