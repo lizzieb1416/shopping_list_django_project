@@ -3,17 +3,17 @@ FROM python:3.8-alpine
 ENV PATH="/scripts:${PATH}"
 
 COPY ./requirements.txt /requirements.txt
-RUN apk add --update --no-cache --virtual .tmp gcc libc-dev linux-headers
+RUN apk add --update --no-cache --virtual .tmp gcc libc-dev linux-headers postgresql-dev musl-dev
 RUN pip install -r /requirements.txt
 RUN apk del .tmp
 
-RUN mkdir /db
+#RUN mkdir /db
 RUN mkdir /shoppinglist
 COPY ./shoppinglist /shoppinglist
 WORKDIR /shoppinglist
 COPY ./scripts /scripts
  
-RUN ln -s /db/db.sqlite3 ./db.sqlite3
+#RUN ln -s /db/db.sqlite3 ./db.sqlite3
 
 RUN chmod +x /scripts/*
 
