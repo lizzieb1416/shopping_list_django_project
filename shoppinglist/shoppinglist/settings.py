@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'changeme')
 DEBUG = True
 
 # ALLOWED_HOSTS = ['ShoppingList-env.eba-ncndieks.eu-west-3.elasticbeanstalk.com']
-ALLOWED_HOSTS = ['192.168.1.8']
+ALLOWED_HOSTS = ['35.180.232.0']
 ALLOWED_HOSTS_ENV = os.environ.get('ALLOWED_HOSTS')
 if ALLOWED_HOSTS_ENV:
     ALLOWED_HOSTS.extend(ALLOWED_HOSTS_ENV.split(','))
@@ -94,11 +94,7 @@ WSGI_APPLICATION = 'shoppinglist.wsgi.application'
 DATABASES = {
     'default': {
         "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.postgresql"),
-        "NAME": os.environ.get("SQL_DATABASE", "sl_db")),
-        "USER": os.environ.get("SQL_USER", "postgres"),
-        "PASSWORD": os.environ.get("SQL_PASSWORD", "postgres"),
-        "HOST": os.environ.get("SQL_HOST", "localhost"),
-        "PORT": os.environ.get("SQL_PORT", "5432"),
+        "NAME": os.environ.get("SQL_DATABASE", "sl_db"),
     }
 }
 
