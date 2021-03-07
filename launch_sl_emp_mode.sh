@@ -54,14 +54,14 @@ echo "STEP 5/9: collecting static files for Shopping List"
 #python3 $SHOPPINGLIST_DIR/shoppinglist/manage.py migrate
 python3 $SHOPPINGLIST_DIR/shoppinglist/manage.py collectstatic --noinput
 
-echo "STEP 4.1/10: Installing postgreSQL "
-sudo apt-get install libpq-dev
-sudo apt install postgresql postgresql-contrib
-echo "STEP 4.2/10: Creating user for the database"
-sudo -u postgres createuser $USER -s
-echo "STEP 4.3/10: Creating database: sl_db"
-sudo -u postgres createdb sl_db
-#echo "STEP 4.4/10: Linking database to user"
+#echo "STEP 4.1/10: Installing postgreSQL "
+#sudo apt-get install libpq-dev
+#sudo apt install postgresql postgresql-contrib
+#echo "STEP 4.2/10: Creating user for the database"
+#sudo -u postgres createuser $USER -s
+#echo "STEP 4.3/10: Creating database: sl_db"
+#sudo -u postgres createdb sl_db
+##echo "STEP 4.4/10: Linking database to user"
 #psql -d sl_db
 echo "STEP 4.4/10: Migrating to database"
 python3 $SHOPPINGLIST_DIR/shoppinglist/manage.py makemigrations
