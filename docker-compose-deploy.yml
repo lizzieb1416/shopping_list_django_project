@@ -17,7 +17,7 @@ services:
       - SQL_DATABASE=sl_db
       - SQL_USER=postgres
       - SQL_PASSWORD=postgres
-      - SQL_HOST=db
+      - SQL_HOST=localhost
       - SQL_PORT=5432
     depends_on: 
       - db
@@ -37,8 +37,8 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment: 
-      - POSTGRES_DB=sl_db # sl_db is the default name, I can omit POSTGRES_DB
-      - POSTGRES_USER=$USER # Can I put USER as an env variable?
+      - POSTGRES_DB=sl_db 
+      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
 
 volumes: 

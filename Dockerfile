@@ -3,9 +3,10 @@ FROM python:3.8-alpine
 ENV PATH="/scripts:${PATH}"
 
 COPY ./requirements.txt /requirements.txt
-RUN apk add --update --no-cache --virtual .tmp gcc libc-dev linux-headers postgresql-dev musl-dev
+#RUN apk add --update --no-cache --virtual .tmp gcc libc-dev linux-headers postgresql-dev musl-dev
+RUN apk add --update gcc libc-dev linux-headers postgresql-dev musl-dev
 RUN pip install -r /requirements.txt
-RUN apk del .tmp
+#RUN apk del .tmp
 
 #RUN mkdir /db
 RUN mkdir /shoppinglist
