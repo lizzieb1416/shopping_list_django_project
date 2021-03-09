@@ -28,6 +28,3 @@ jobs:
     - name: Run Tests
       run: |
         ./shoppinglist/manage.py test ./shoppinglist/main/
-
-       
-
