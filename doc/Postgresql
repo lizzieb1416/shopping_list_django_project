@@ -148,3 +148,9 @@ python3 $SHOPPINGLIST_DIR/shoppinglist/manage.py makemigrations
 python3 $SHOPPINGLIST_DIR/shoppinglist/manage.py migrate
 
 
+<< DOCKER IMAGES FOR POSTGRESQL MANIPULATION >>
+
+https://docs.docker.com/compose/django/
+https://testdriven.io/blog/dockerizing-django-with-postgres-gunicorn-and-nginx/
+https://hub.docker.com/_/postgres
+https://docs.docker.com/engine/install/linux-postinstall/

@@ -13,6 +13,7 @@ services:
       - SECRET_KEY=samplesecretkey123
       - ALLOWED_HOSTS=127.0.0.1,localhost
       - DEBUG=1
+      - DATABASE_TYPE=POSTGRESQL
       - SQL_ENGINE=django.db.backends.postgresql
       - SQL_DATABASE=sl_db
       - SQL_USER=postgres

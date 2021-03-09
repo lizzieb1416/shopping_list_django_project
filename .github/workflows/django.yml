@@ -27,4 +27,7 @@ jobs:
         pip install -r requirements.txt
     - name: Run Tests
       run: |
-        python manage.py test
+        ./shoppinglist/manage.py test ./shoppinglist/main/
+
+       
+
