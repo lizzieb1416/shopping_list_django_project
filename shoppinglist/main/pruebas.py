@@ -4,8 +4,7 @@ from django.test import TestCase
 
 class AnimalTestCase(TestCase):
     def setUp(self):
-        pass
-        
+        pass   
 
     def test_animals_can_speak(self):
         self.assertTrue(True)
