@@ -56,12 +56,12 @@ In the command line:
   ```sh
   cd shopping_list_django_project
   ```
-- Set and environment variable for ALLOWED_HOSTS
+- Set and environment variable for `ALLOWED_HOSTS`
   ```sh
   export ALLOWED_HOSTS=<ip_machine>
   ```
 - Launch the script
- ```sh
+  ```sh
   ./launch_sl_emp_mode.sh
   ```
 The service is now active in the machine for production.You can now visit <ip_machine>:80 in you browser. Changes can be made directly to the app code if necessary while it in production stage and there's no need to stop the service or reload it. With 	this configuration uWSGI will start up when the system boots.
@@ -89,7 +89,7 @@ The second one uses Docker containers and Docker Compose to run the application.
 
 It uses PostgreSQL as database. 
 
-##### Instalation and usage
+#### Instalation and usage
 - update and upgrade the machine
   ```sh
   apt-get update
@@ -115,14 +115,19 @@ It uses PostgreSQL as database.
   ```sh
   docker-compose up
   ```
-  Connect to it in the browser tapping <ip_of_local_host>:8000
+  Connect to it in the browser tapping `<localhost_ip>:8000`
 - Launch for production 
   ```sh 
   docker-compose -f docker-compose-deploy.yml up
   ```
-  Connect to it in the browser tapping <ip_of_local_host>:8080
+  Connect to it in the browser tapping `<localhost_ip>:8000`
  
+## Source 
+ 
+- [Django tutorial - Tech with Tim](https://www.techwithtim.net/tutorials/django/setup/)
+- [How to set up Django on Nginx with uWSGI - Tony Teaches Tech](https://tonyteaches.tech/django-nginx-uwsgi-tutorial/)
+- [Prepare a Django app for Deployment using Docker - London App Developer](https://www.youtube.com/watch?v=nh1ynJGJuT8&list=PLIWLW8_gNNc1dLUGuSAzpsf3zRDrR-yKy&index=45&t=1893s)
 
 
 ## Contact 
-Liset Bastidas lisetbastidasg@gmail.com
+Liset Bastidas - lisetbastidasg@gmail.com
