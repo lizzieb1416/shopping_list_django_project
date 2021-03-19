@@ -41,28 +41,48 @@ python manage.py migrate
 python manage.py runserver
 
 ##### Installation for production 
-In the command line: 
-- Update and upgrade the machine:
-	apt-get update
-	apt-get upgrade
+In the command line:
+- Update and upgrade the machine
+  ```sh
+  apt-get update
+  ```
+  ```sh
+  apt-get upgrade
+  ```
 - Clone the repository
+  ```sh
   git clone https://github.com/lizzieb1416/shopping_list_django_project.git
+  ```
+  ```sh
   cd shopping_list_django_project
+  ```
 - Set and environment variable for ALLOWED_HOSTS
-	export ALLOWED_HOSTS=<ip_machine>
+  ```sh
+  export ALLOWED_HOSTS=<ip_machine>
+  ```
 - Launch the script
+ ```sh
   ./launch_sl_emp_mode.sh
+  ```
 The service is now active in the machine for production.You can now visit <ip_machine>:80 in you browser. Changes can be made directly to the app code if necessary while it in production stage and there's no need to stop the service or reload it. With 	this configuration uWSGI will start up when the system boots.
 
 #### Usage in production 
 - To see the status of the service
+  ```sh
   systemctl status emperor.uwsgi.service
+  ```
 - To stop the service
+  ```sh
   systemctl status emperor.uwsgi.service
+  ```
 - To start the service
+  ```sh
   systemctl start emperor.uwsgi.service
+  ```
 - To delete the service from the machine
+  ```sh
   sudo ./clean.sh 
+  ```
 
 ### Docker containers
 The second one uses Docker containers and Docker Compose to run the application. There is two Docker images, one with the web application and the database and the other one with Nginx.
@@ -71,20 +91,38 @@ It uses PostgreSQL as database.
 
 ##### Instalation and usage
 - update and upgrade the machine
-	apt-get update
-	apt-get upgrade
+  ```sh
+  apt-get update
+  ```
+  ```sh
+  apt-get upgrade
+  ```
 - Clone the repository
+  ```sh
   git clone https://github.com/lizzieb1416/shopping_list_django_project.git
+  ```
+  ```sh
   cd shopping_list_django_project
+  ```
 - Install Docker and Docker Compose
-	sudo apt install docker.io
-	sudo apt install docker-compose
+  ```sh
+  sudo apt install docker.io
+  ```
+  ```sh
+  sudo apt install docker-compose
+  ```
 - Launch for development
-	docker-compose up
-	Connect to it in the browser tapping <ip_of_local_host>:8000
+  ```sh
+  docker-compose up
+  ```
+  Connect to it in the browser tapping <ip_of_local_host>:8000
 - Launch for production 
-	docker-compose -f docker-compose-deploy.yml up
-	Connect to it in the browser tapping <ip_of_local_host>:8080
+  ```sh 
+  docker-compose -f docker-compose-deploy.yml up
+  ```
+  Connect to it in the browser tapping <ip_of_local_host>:8080
+ 
 
 
 ## Contact 
+Liset Bastidas lisetbastidasg@gmail.com
