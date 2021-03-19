@@ -1,6 +1,18 @@
 # Shopping List Web Application 
 
 ## Table of contents 
+- [Introduction](#Introduction)
+ - [Fatures](#Features)
+ - [Technologies](#Technologies)
+- [Set Up](#SetUp)
+ - [Native service in Ubuntu](#NativeserviceinUbuntu)
+   - [Installation and usage for developpement](#Installationandusagefordeveloppement)
+   - [Installation for production](#Installationforproduction)
+   - [Usage in production](#Usageinproduction)
+ - [Docker containers](#Dockercontainers)
+  - [Installation and usage](#Installationandusage)
+- [Source](#Source)
+- [Contact](#Contact)
 
 ## Introduction 
 This is the server of a web application where you can create your shopping lists (SL). You can create several SLs and add items to it of different types. At the end of the SL you'll have the calculation of the final price and the total quantity of items added. I give two posibilities for the deployment set up: Docker containers and native service.
@@ -32,13 +44,32 @@ It uses sqlite3 as database.
 
 ##### Instalation and usage for developpement
 In the command line: 
+- Clone the repository
+```sh
 git clone https://github.com/lizzieb1416/shopping_list_django_project.git
-python3 -m venv myenv
+```
+- Create and activate the virtual envirorment
+```
+sh python3 -m venv myenv
+```
+```sh
 ./myenv/Scripts/activate
+```
+- Install the requirements
+```sh
 pip install requirements-dev.txt
+```
+- Make migrations to the database 
+```sh 
 python manage.py makemigrations
+```
+```sh 
 python manage.py migrate
+```
+- Launch the server in developpement stage
+```sh
 python manage.py runserver
+```
 
 ##### Installation for production 
 In the command line:
