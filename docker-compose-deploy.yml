@@ -1,9 +1,24 @@
 version: '3.7'
 
 services: 
+
+  db:
+    image: postgres:12.0-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment: 
+      POSTGRES_PASSWORD: postgres
+
+docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres
+
+
+
+
+
+
+
   shoppinglist:
-    build: 
-      context: .
+    build: .
     volumes: 
       - static_data:/vol/web
       - ./database:/db
@@ -18,7 +33,7 @@ services:
       - SQL_DATABASE=sl_db
       - SQL_USER=postgres
       - SQL_PASSWORD=postgres
-      - SQL_HOST=localhost
+      - SQL_HOST=db
       - SQL_PORT=5432
     depends_on: 
       - db
@@ -32,15 +47,6 @@ services:
       - "8080:8080"
     depends_on: 
       - shoppinglist
-
-  db:
-    image: postgres:12.0-alpine
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    environment: 
-      - POSTGRES_DB=sl_db 
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
 
 volumes: 
   static_data:
