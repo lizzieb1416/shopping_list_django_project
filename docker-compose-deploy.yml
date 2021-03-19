@@ -7,15 +7,9 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment: 
-      POSTGRES_PASSWORD: postgres
-
-docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres
-
-
-
-
-
-
+      - POSTGRES_USER=django_user
+      - POSTGRES_PASSWORD=django_password
+      - POSTGRES_DB=sl_db
 
   shoppinglist:
     build: .
@@ -26,13 +20,13 @@ docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgre
       - STATIC_ROOT=/vol/web/static
       # - MEDIA_ROOT=/vol/web/media
       - SECRET_KEY=samplesecretkey123
-      - ALLOWED_HOSTS=127.0.0.1,localhost
+      - ALLOWED_HOSTS=*
       - DEBUG=1
       - DATABASE_TYPE=POSTGRESQL
       - SQL_ENGINE=django.db.backends.postgresql
+      - SQL_USER=django_user
+      - SQL_PASSWORD=django_password
       - SQL_DATABASE=sl_db
-      - SQL_USER=postgres
-      - SQL_PASSWORD=postgres
       - SQL_HOST=db
       - SQL_PORT=5432
     depends_on: 
