@@ -20,8 +20,8 @@
 ## Introduction 
 This is the server of a web application where you can create your shopping lists (SL). You can create several SLs and add items to it of different types. At the end of the SL you'll have the calculation of the final price and the total quantity of items added. I give two posibilities for the deployment set up: Docker containers and native service.
 
-| <img src="shoppinglist/static/images/ladingpage.png" width="450"> | <img src="shoppinglist/static/images/listspage.png" width="450"> |
-| <img src="shoppinglist/static/images/listdetails.png" width="450"> | <img src="shoppinglist/static/images/userdetails.png" width="450"> |
+<img src="shoppinglist/static/images/ladingpage.png" width="450"> <img src="shoppinglist/static/images/listspage.png" width="450"> 
+<img src="shoppinglist/static/images/listdetails.png" width="450"> <img src="shoppinglist/static/images/userdetails.png" width="450"> 
 
 #### Features 
 - Lists creation and mathematical calculation of item's price
