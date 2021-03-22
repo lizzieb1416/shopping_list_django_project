@@ -8,11 +8,11 @@ from django.conf import settings
 class TestUrls(SimpleTestCase):
    
    
-    def test_list_renderer_url_resolves(self):
+    #def test_list_renderer_url_resolves(self):
         #url = reverse('main:list_renderer', args=['(?P<id>[0-9]+)$'])
         #print(resolve(url))
         #self.assertEquals(resolve(url).func, list_renderer)
-        pass
+        #pass
     
     def test_userhome_url_resolves(self):
         url = reverse('main:userhome')
